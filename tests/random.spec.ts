@@ -16,7 +16,6 @@ test('test', async ({ page }) => {
   await page.getByRole('button', { name: 'Show password' }).click();
   await page.getByText('Login', { exact: true }).click();
   await page.getByRole('button', { name: 'Next' }).click();
-
   await page.goto('https://uat.beowned.com/seller/listings/create?step=photos');
   await page.getByRole('button', { name: 'Add Image' }).click();
 });
