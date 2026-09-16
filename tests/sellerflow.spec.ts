@@ -142,16 +142,27 @@ await page
   .fill('This is additional information about the property.');
   await page.getByRole('button', { name: 'Next' }).click();
 
-// Step 1 + 2: Start listening for the file dialog, then click the button.
-// Both must happen together via Promise.all — if you click first and
-// listen after, you can miss the event.
-const [fileChooser] = await Promise.all([
-  page.waitForEvent('filechooser'),
-  page.getByRole('button', { name: 'Add Image' }).click(),
-]);
+  await page.getByText('Skip For Now').click();
+  await page.getByText('Skip For Now').click();
 
-// Step 3 + 4: Playwright has intercepted the dialog — now supply the file.
-await fileChooser.setFiles(
-  'C:\\Users\\U S PVT LTD\\Downloads\\property1.jpg'
-);
+  await page.getByRole('textbox', { name: 'Price' }).click();
+  await page.getByRole('textbox', { name: 'Price' }).fill('₹9,00,0000');
+  await page.getByRole('checkbox', { name: 'Price negotiable' }).check();
+  await page.getByRole('checkbox', { name: 'Including taxes' }).check();
+  await page.getByRole('checkbox', { name: 'Excluding taxes' }).check();
+  await page.locator('div').nth(4).click();
+  await page.getByRole('checkbox', { name: 'I agree to pay additional' }).check();
+  await page.getByRole('checkbox', { name: 'I agree to Terms & Condition' }).check();
+  await page.getByRole('button', { name: 'Next' }).click();
+  await page.getByRole('button', { name: 'Living Room' }).click();
+  await page.getByText('+ Add another item').first().click();
+  await page.getByPlaceholder('Type').click();
+  await page.getByPlaceholder('Type').fill('TV');
+
+  await page.getByRole('textbox', { name: 'Furnish Description' }).click();
+  await page.getByRole('textbox', { name: 'Furnish Description' }).fill('Unfurnished');
+  await page.getByRole('button', { name: 'Next' }).click();
+  await page.getByText('Skip For NowNext').click();
+  await page.getByRole('button', { name: 'Skip For Now' }).click();
+  await page.getByRole('link', { name: 'Go to MyListing' }).click();
 });
