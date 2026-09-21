@@ -10,3 +10,4 @@ test('test', async ({ page }) => {
   await page.getByRole('button', { name: 'Show password' }).click();
   await page.getByText('Login', { exact: true }).click();
 });
+

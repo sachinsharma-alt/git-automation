@@ -20,13 +20,13 @@ test('test', async ({ page }) => {
   await page.getByRole('button', { name: 'Next' }).click();
   await page.getByRole('button', { name: 'Select Apartment/Flat' }).click();
   await page.getByRole('textbox', { name: 'Property Name' }).click();
-  await page.getByRole('textbox', { name: 'Property Name' }).fill('Ananta Tower');
+  await page.getByRole('textbox', { name: 'Property Name' }).fill('Mahavir test');
   await page.getByRole('textbox', { name: 'Unit / Flat Number' }).click();
   await page.getByRole('textbox', { name: 'Unit / Flat Number' }).fill('302');
   // BHK dropdown
 // 3. BHK
 await page.locator('#mui-component-select-bhk').click();
-await page.getByRole('option').first().click();
+await page.getByRole('option').nth(2).click();
 
 
 // 4. Floor Number
@@ -41,7 +41,7 @@ await page.getByRole('option').first().click();
 
 // 6. Furnishing
 await page.locator('#mui-component-select-furnishing').click();
-await page.getByRole('option').first().click();
+await page.getByRole('option').nth(2).click();
 
 
 // 7. Number Of Bathroom(s)
@@ -158,11 +158,11 @@ await page
   await page.getByText('+ Add another item').first().click();
   await page.getByPlaceholder('Type').click();
   await page.getByPlaceholder('Type').fill('TV');
-
   await page.getByRole('textbox', { name: 'Furnish Description' }).click();
-  await page.getByRole('textbox', { name: 'Furnish Description' }).fill('Unfurnished');
+  await page.getByRole('textbox', { name: 'Furnish Description' }).fill('furnished');
   await page.getByRole('button', { name: 'Next' }).click();
   await page.getByText('Skip For NowNext').click();
   await page.getByRole('button', { name: 'Skip For Now' }).click();
   await page.getByRole('link', { name: 'Go to MyListing' }).click();
 });
+
