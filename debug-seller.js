@@ -1,0 +1,60 @@
+const { chromium } = require('playwright');
+
+(async () => {
+  const browser = await chromium.launch({ headless: true });
+  const page = await browser.newPage();
+
+  await page.goto('https://uat.beowned.com/');
+  await page.getByRole('button', { name: 'Sell' }).click();
+  await page.getByRole('combobox', { name: 'Property Address' }).click();
+  await page.getByRole('combobox', { name: 'Property Address' }).fill('ananta tower');
+  await page.getByRole('combobox', { name: 'Property Address' }).press('ArrowDown');
+  await page.getByRole('option', { name: 'Ananta Towers Phase 2 CIDCO' }).click();
+  await page.getByRole('button', { name: 'Search' }).click();
+  await page.getByText('User LoginHey! Login to your existing account.PasswordOTP LoginEmail Id or').click();
+  await page.getByRole('textbox', { name: 'Email Id or mobile number' }).fill('Sachin.sharma@beowned.com');
+  await page.getByRole('textbox', { name: 'Password Show password' }).fill('Sachin@2oo4');
+  await page.getByText('Login', { exact: true }).click();
+  await page.getByRole('button', { name: 'Next' }).click();
+  await page.getByRole('radio', { name: 'Residential' }).check();
+  await page.getByRole('button', { name: 'Next' }).click();
+  await page.getByRole('button', { name: 'Select Apartment/Flat' }).click();
+  await page.getByRole('textbox', { name: 'Property Name' }).fill('Mahavir test');
+  await page.getByRole('textbox', { name: 'Unit / Flat Number' }).fill('302');
+  await page.locator('#mui-component-select-bhk').click(); await page.getByRole('option').nth(2).click();
+  await page.locator('#mui-component-select-floorNumber').click(); await page.getByRole('option').first().click();
+  await page.locator('#mui-component-select-totalFloors').click(); await page.getByRole('option').first().click();
+  await page.locator('#mui-component-select-furnishing').click(); await page.getByRole('option').nth(2).click();
+  await page.locator('#mui-component-select-bathrooms').click(); await page.getByRole('option').first().click();
+  await page.locator('input[name="builtupArea"]').fill('1210');
+  await page.locator('input[name="carpetArea"]').fill('968');
+  await page.locator('#mui-component-select-propertyCondition').click(); await page.getByRole('option').first().click();
+  await page.locator('#mui-component-select-balconies').click(); await page.getByRole('option').first().click();
+  await page.locator('#mui-component-select-elevator').click(); await page.getByRole('option').first().click();
+  await page.locator('#mui-component-select-gasPipeline').click(); await page.getByRole('option').first().click();
+  await page.locator('#mui-component-select-builtYear').click(); await page.getByRole('option').first().click();
+  await page.locator('#mui-component-select-waterSupply').click(); await page.getByRole('option').first().click();
+  await page.locator('#mui-component-select-parking').click(); await page.getByRole('option').first().click();
+  await page.locator('#mui-component-select-numberOfParking').click(); await page.getByRole('option').first().click();
+  await page.locator('#mui-component-select-facing').click(); await page.getByRole('option').first().click();
+  await page.locator('#mui-component-select-occupancyStatus').click(); await page.getByRole('option').first().click();
+  await page.locator('input[name="availableFrom"]').fill('2026-10-01');
+  await page.locator('input[name="description"]').fill('Well-maintained property in Ananta Tower.');
+  await page.getByRole('button', { name: 'Next' }).click();
+  await page.getByRole('checkbox', { name: '2 Wheeler Parking' }).check();
+  await page.getByRole('button', { name: 'Next' }).click();
+  await page.locator('#mui-component-select-isOwner').click(); await page.getByRole('option', { name: 'Yes', exact: true }).click();
+  await page.locator('#mui-component-select-sellingTimeline').click(); await page.getByRole('option', { name: 'Within 1 month', exact: true }).click();
+  await page.locator('#mui-component-select-sellingReason').click(); await page.getByRole('option', { name: 'Buying another property', exact: true }).click();
+  await page.locator('input[name="reraId"]').fill('RERA123456');
+  await page.locator('input[name="additionalInformation"]').fill('This is additional information about the property.');
+  await page.getByRole('button', { name: 'Next' }).click();
+
+  console.log('URL after additional-info next:', await page.url());
+  console.log('Visible buttons after additional-info next:', await page.getByRole('button').allTextContents());
+  console.log('Skip For Now via role:', await page.getByRole('button', { name: 'Skip For Now' }).count());
+  console.log('Skip For Now via text:', await page.getByText('Skip For Now').count());
+  console.log('Body snippet:\n' + (await page.locator('body').innerText()).slice(0, 2000));
+
+  await browser.close();
+})();

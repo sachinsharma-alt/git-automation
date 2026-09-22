@@ -154,15 +154,19 @@ await page
   await page.getByRole('checkbox', { name: 'I agree to pay additional' }).check();
   await page.getByRole('checkbox', { name: 'I agree to Terms & Condition' }).check();
   await page.getByRole('button', { name: 'Next' }).click();
-  await page.getByRole('button', { name: 'Living Room' }).click();
-  await page.getByText('+ Add another item').first().click();
-  await page.getByPlaceholder('Type').click();
-  await page.getByPlaceholder('Type').fill('TV');
-  await page.getByRole('textbox', { name: 'Furnish Description' }).click();
-  await page.getByRole('textbox', { name: 'Furnish Description' }).fill('furnished');
+
+  // Property documentation page appears after pricing; skip it to continue.
+  await expect(page.getByRole('button', { name: /Skip For Now/i })).toBeVisible({ timeout: 20000 });
+  await page.getByRole('button', { name: /Skip For Now/i }).click();
+
+  // Current app shows the furnishing form on one screen and the description is required.
+  await expect(page.getByText('Which items are included with your property?')).toBeVisible({ timeout: 20000 });
+  await page.getByRole('combobox', { name: 'Kitchen' }).selectOption({ label: 'Kitchen' });
+  await page.getByRole('combobox', { name: 'Bathroom' }).selectOption({ label: 'Bathroom' });
+  await page.getByRole('combobox', { name: 'Balcony' }).selectOption({ label: 'Balcony' });
+  await page.getByRole('combobox', { name: 'Other' }).selectOption({ label: 'Other' });
+  await page.getByRole('textbox', { name: 'Furnish Description' }).fill('unfurnished');
   await page.getByRole('button', { name: 'Next' }).click();
-  await page.getByText('Skip For NowNext').click();
-  await page.getByRole('button', { name: 'Skip For Now' }).click();
+  await page.getByText('Skip For Now').click();
   await page.getByRole('link', { name: 'Go to MyListing' }).click();
 });
-
