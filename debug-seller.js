@@ -1,7 +1,7 @@
 const { chromium } = require('playwright');
 
 (async () => {
-  const browser = await chromium.launch({ headless: true });
+  const browser = await chromium.launch({ headless: false });
   const page = await browser.newPage();
 
   await page.goto('https://uat.beowned.com/');
@@ -56,5 +56,6 @@ const { chromium } = require('playwright');
   console.log('Skip For Now via text:', await page.getByText('Skip For Now').count());
   console.log('Body snippet:\n' + (await page.locator('body').innerText()).slice(0, 2000));
 
-  await browser.close();
+  console.log('Browser will stay open for inspection. Close it manually when you are done.');
+  await page.waitForTimeout(600000);
 })();
