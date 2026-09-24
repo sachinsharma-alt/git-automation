@@ -20,7 +20,7 @@ test('test', async ({ page }) => {
   await page.getByRole('button', { name: 'Next' }).click();
   await page.getByRole('button', { name: 'Select Apartment/Flat' }).click();
   await page.getByRole('textbox', { name: 'Property Name' }).click();
-  await page.getByRole('textbox', { name: 'Property Name' }).fill('Mahavir test');
+  await page.getByRole('textbox', { name: 'Property Name' }).fill('24th sep test');
   await page.getByRole('textbox', { name: 'Unit / Flat Number' }).click();
   await page.getByRole('textbox', { name: 'Unit / Flat Number' }).fill('302');
   // BHK dropdown
@@ -186,30 +186,20 @@ test('test', async ({ page }) => {
   await page.getByRole('button', { name: 'Balcony' }).click();
   await page.getByText('+ Add another item').nth(4).click();
   await page.getByPlaceholder('Type').nth(4).click();
-  await page.getByPlaceholder('Type').nth(4).fill('PLANTS'); // your value here   WORKING TILL HERE 
+  await page.getByPlaceholder('Type').nth(4).fill('PLANTS'); // your value here 
 
   await page.getByRole('button', { name: 'Other' }).click();
   await page.getByText('+ Add another item').nth(5).click();
   await page.getByPlaceholder('Type').nth(5).click();
   await page.getByPlaceholder('Type').nth(5).fill('paintings');
-  await page.getByPlaceholder('ex. tv 32 inch, fridge 2 liter, washahing mavhind AC 2 ton etc.').nth(5).click();
-  await page.getByPlaceholder('ex. tv 32 inch, fridge 2 liter, washahing mavhind AC 2 ton etc.').nth(5).fill('TV, Fridge, Washing Machine, AC');
-
-
-
-
-  await page.locator('div:nth-child(5) > .MuiPaper-root > .MuiCollapse-root > .MuiCollapse-wrapper > .MuiCollapse-wrapperInner > .MuiAccordion-region > .MuiAccordionDetails-root > .MuiGrid-root.MuiGrid-container > .MuiGrid-root > .PropertyAdditionalInfoPage-module__ImNWpG__furnishItemFieldWrapper').click();
-  await page.locator('[id="_r_ap_"]').click();
-  await page.locator('[id="_r_ap_"]').fill('Plants');
-  await page.getByRole('button', { name: 'Other' }).click();
-  await page.getByText('+ Add another item').nth(5).click();
-  await page.locator('div:nth-child(6) > .MuiPaper-root > .MuiCollapse-root > .MuiCollapse-wrapper > .MuiCollapse-wrapperInner > .MuiAccordion-region > .MuiAccordionDetails-root > .MuiGrid-root.MuiGrid-container > .MuiGrid-root > .PropertyAdditionalInfoPage-module__ImNWpG__furnishItemFieldWrapper').click();
-  await page.locator('[id="_r_aq_"]').click();
-  await page.locator('[id="_r_aq_"]').fill('Jhumar');
-  await page.getByRole('textbox', { name: 'Furnish Description' }).click();
-  await page.getByRole('textbox', { name: 'Furnish Description' }).fill('Ac ');
+  await page.getByRole('textbox', { name: 'Furnish Description' }).fill('TV, Fridge, Washing Machine, AC');
   await page.getByRole('button', { name: 'Next' }).click();
 
-  await page.getByText('Skip For Now').click();
-  await page.getByRole('link', { name: 'Go to MyListing' }).click();
+  // The current listing flow routes to the property documentation step before the final
+  // listing confirmation screen. Skip it so the test can reach the final My Listings CTA.
+  await page.getByRole('button', { name: 'Skip For Now' }).click();
+
+  const myListingLink = page.getByRole('link', { name: /Go to My ?Listing/i });
+  await expect(myListingLink).toBeVisible({ timeout: 30000 });
+  await myListingLink.click();
 });
